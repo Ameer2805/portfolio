@@ -1,0 +1,338 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Ameer Basha Portfolio</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@500;700&family=Figtree:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a game "select screen". Hero is a player card, projects are stage cards with HUD stats. Single dark look by choice. */
+:root {
+  --bg: #12152b;
+  --bg-deep: #0c0e20;
+  --panel: #1b1f3d;
+  --line: #2e3463;
+  --fg: #e9ebff;
+  --muted: #9aa0cf;
+  --accent: #ff7a4d;
+  --accent-ink: #1a0b05;
+  --steel: #8fd3ff;
+  --ok: #7be0a4;
+  --warn: #ffd166;
+  --f-display: "Pixelify Sans", "Courier New", monospace;
+  --f-body: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--f-body);
+  font-size: 17px;
+  line-height: 1.6;
+  padding-block: 0;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  background-image:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 48px 48px;
+  background-position: -1px -1px;
+  background-attachment: fixed;
+}
+body::before {
+  content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px);
+  background: var(--bg-deep); z-index: 10;
+}
+.wrap { max-width: 1040px; margin: 0 auto; }
+a { color: var(--steel); }
+a:focus-visible, button:focus-visible { outline: 3px solid var(--warn); outline-offset: 3px; }
+
+/* top bar */
+.bar {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5;
+  background: var(--bg-deep); border-bottom: 2px solid var(--line);
+  margin-left: calc(-1 * max(16px, env(safe-area-inset-left, 0px)));
+  margin-right: calc(-1 * max(16px, env(safe-area-inset-right, 0px)));
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.bar .wrap { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding-block: 12px; flex-wrap: wrap; }
+.logo { font-family: var(--f-display); font-weight: 700; font-size: 1.15rem; letter-spacing: .04em; color: var(--fg); text-decoration: none; }
+.logo span { color: var(--accent); }
+nav { display: flex; gap: 20px; flex-wrap: wrap; }
+nav a { font-family: var(--f-mono); font-size: .8rem; text-transform: uppercase; letter-spacing: .12em; color: var(--muted); text-decoration: none; }
+nav a:hover { color: var(--fg); }
+
+/* hero */
+.hero { padding-block: 64px 48px; display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: 40px; align-items: center; }
+.eyebrow { font-family: var(--f-mono); font-size: .8rem; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); margin: 0 0 14px; }
+h1 { font-family: var(--f-display); font-weight: 700; font-size: clamp(2.6rem, 8vw, 4.9rem); line-height: 1; margin: 0 0 20px; text-wrap: balance; letter-spacing: -.01em; }
+h1 em { font-style: normal; color: var(--accent); }
+.lede { color: var(--muted); max-width: 52ch; margin: 0 0 28px; font-size: 1.08rem; }
+.cta { display: flex; gap: 12px; flex-wrap: wrap; }
+.btn {
+  font-family: var(--f-display); font-weight: 700; font-size: 1rem; letter-spacing: .04em;
+  display: inline-block; padding: 12px 20px; text-decoration: none; border: 2px solid var(--accent);
+  background: var(--accent); color: var(--accent-ink); box-shadow: 4px 4px 0 var(--bg-deep);
+  transition: transform .12s, box-shadow .12s;
+}
+.btn:hover { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--bg-deep); }
+.btn.ghost { background: transparent; color: var(--fg); border-color: var(--line); }
+.btn.ghost:hover { border-color: var(--steel); }
+
+.card-player { background: var(--panel); border: 2px solid var(--line); box-shadow: 6px 6px 0 var(--bg-deep); padding: 20px; }
+.card-player h2 { font-family: var(--f-display); font-size: 1.1rem; margin: 0 0 14px; display: flex; justify-content: space-between; gap: 12px; }
+.card-player h2 small { font-family: var(--f-mono); font-weight: 400; font-size: .72rem; color: var(--ok); letter-spacing: .1em; align-self: center; }
+dl { margin: 0; display: grid; gap: 0; }
+.row { display: grid; grid-template-columns: 6.5rem minmax(0, 1fr); gap: 12px; padding-block: 10px; border-top: 1px dashed var(--line); }
+dt { font-family: var(--f-mono); font-size: .72rem; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); padding-top: 3px; }
+dd { margin: 0; font-size: .98rem; min-width: 0; overflow-wrap: anywhere; }
+
+/* sections */
+section { padding-block: 56px; scroll-margin-top: 72px; }
+.head { display: flex; align-items: baseline; gap: 16px; margin-bottom: 28px; flex-wrap: wrap; }
+h2.title { font-family: var(--f-display); font-weight: 700; font-size: clamp(1.7rem, 4vw, 2.3rem); margin: 0; text-wrap: balance; }
+.head p { margin: 0; color: var(--muted); font-size: .95rem; }
+.about { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 40px; }
+.about p { margin: 0 0 16px; max-width: 62ch; }
+.learn { background: var(--panel); border: 2px solid var(--line); padding: 20px; }
+.learn h3 { font-family: var(--f-mono); font-size: .76rem; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); margin: 0 0 12px; font-weight: 500; }
+.learn ul { margin: 0; padding-left: 1.1rem; display: grid; gap: 6px; }
+
+/* skills */
+.skills { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 20px; }
+.group { background: var(--panel); border: 2px solid var(--line); padding: 18px; }
+.group h3 { font-family: var(--f-display); font-size: 1.05rem; margin: 0 0 12px; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { font-family: var(--f-mono); font-size: .8rem; padding: 4px 10px; border: 1px solid var(--line); background: var(--bg-deep); color: var(--fg); }
+
+/* projects */
+.stages { display: grid; gap: 28px; }
+.stage { background: var(--panel); border: 2px solid var(--line); box-shadow: 6px 6px 0 var(--bg-deep); display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); }
+.stage .main { padding: 24px; min-width: 0; }
+.stage .hud { padding: 24px; background: var(--bg-deep); border-left: 2px solid var(--line); min-width: 0; }
+.tag { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-bottom: 10px; }
+.stagelabel { font-family: var(--f-mono); font-size: .74rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.pill { font-family: var(--f-mono); font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; padding: 2px 9px; border: 1px solid currentColor; }
+.pill.done { color: var(--ok); }
+.pill.wip { color: var(--warn); }
+.stage h3 { font-family: var(--f-display); font-size: clamp(1.5rem, 3.5vw, 2rem); margin: 0 0 10px; }
+.stage p { margin: 0 0 16px; max-width: 60ch; }
+.feats { margin: 0 0 20px; padding: 0; list-style: none; display: grid; gap: 8px; }
+.feats li { padding-left: 22px; position: relative; font-size: .97rem; }
+.feats li::before { content: ""; position: absolute; left: 2px; top: .55em; width: 8px; height: 8px; background: var(--accent); }
+.feats b { font-weight: 600; }
+.hud h4 { font-family: var(--f-mono); font-size: .74rem; letter-spacing: .12em; text-transform: uppercase; color: var(--steel); margin: 0 0 12px; font-weight: 500; }
+.hud .chips { margin-bottom: 22px; }
+.hud ul { margin: 0 0 22px; padding-left: 1.1rem; display: grid; gap: 6px; font-size: .94rem; }
+.hud ul:last-child { margin-bottom: 0; }
+.mini { display: grid; grid-template-columns: minmax(0, 1fr); gap: 20px; }
+.mini .stage { grid-template-columns: minmax(0, 1fr); }
+
+/* contact */
+.contact { background: var(--panel); border: 2px solid var(--line); box-shadow: 6px 6px 0 var(--bg-deep); padding: 32px; display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 32px; align-items: center; }
+.contact h2 { font-family: var(--f-display); font-size: clamp(1.7rem, 4vw, 2.4rem); margin: 0 0 8px; text-wrap: balance; }
+.contact p { margin: 0; color: var(--muted); }
+.links { display: grid; gap: 10px; }
+.links .row { grid-template-columns: 5.5rem minmax(0, 1fr); align-items: center; }
+.copy { font-family: var(--f-mono); font-size: .72rem; background: transparent; color: var(--steel); border: 1px solid var(--line); padding: 2px 8px; cursor: pointer; margin-left: 8px; }
+.copy:hover { border-color: var(--steel); }
+footer { padding-block: 32px 48px; color: var(--muted); font-family: var(--f-mono); font-size: .78rem; border-top: 2px solid var(--line); text-align: left; }
+
+@media (max-width: 800px) {
+  .hero, .about, .contact, .stage { grid-template-columns: minmax(0, 1fr); }
+  .stage .hud { border-left: 0; border-top: 2px solid var(--line); }
+  .hero { padding-block: 40px 24px; }
+  section { padding-block: 40px; }
+  nav { gap: 14px; }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .btn { transition: none; } }
+</style>
+
+<header class="bar">
+  <div class="wrap">
+    <a class="logo" href="#top">AMEER<span>.</span>BASHA</a>
+    <nav aria-label="Sections">
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap" id="top">
+  <div class="hero">
+    <div>
+      <p class="eyebrow">Game developer in the making</p>
+      <h1>I build 2D games with <em>Unity</em> and C#.</h1>
+      <p class="lede">I am an MCA student who makes small, playable games. My work so far covers combat, enemy behavior, physics and animation. I am looking for a game development role where I can keep shipping and learning.</p>
+      <div class="cta">
+        <a class="btn" href="#projects">See my games</a>
+        <a class="btn ghost" href="https://github.com/Ameer2805" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </div>
+    <aside class="card-player" aria-label="Player card">
+      <h2>PLAYER ONE <small>OPEN TO WORK</small></h2>
+      <dl>
+        <div class="row"><dt>Name</dt><dd>Ameer Basha M</dd></div>
+        <div class="row"><dt>Class</dt><dd>Gameplay programmer</dd></div>
+        <div class="row"><dt>Degree</dt><dd>MCA (pursuing), BCA</dd></div>
+        <div class="row"><dt>Main tools</dt><dd>Unity, C#, Visual Studio</dd></div>
+        <div class="row"><dt>Games</dt><dd>1 completed, 1 in progress</dd></div>
+      </dl>
+    </aside>
+  </div>
+
+  <section id="about">
+    <div class="head"><h2 class="title">About</h2></div>
+    <div class="about">
+      <div>
+        <p>I completed my BCA and am now pursuing an MCA. My final year BCA project was an IoT-based gas reservation and leakage detection system, which taught me how to connect software to real hardware and sensor data.</p>
+        <p>Since then I have moved toward game development. I like the mix of logic and feel that makes a game work: a hammer swing that lands, an enemy that respawns on time, a jump that feels right.</p>
+        <p>I use Git and GitHub for version control and I enjoy solving problems with data structures and algorithms.</p>
+      </div>
+      <div class="learn">
+        <h3>What I have learned so far</h3>
+        <ul>
+          <li>Building 2D games in Unity</li>
+          <li>Writing gameplay mechanics in C#</li>
+          <li>Using Rigidbody2D and Collider2D</li>
+          <li>Handling respawns and game-over logic</li>
+          <li>Animating characters with Unity Animator</li>
+          <li>Debugging gameplay issues</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="head"><h2 class="title">Skills</h2></div>
+    <div class="skills">
+      <div class="group">
+        <h3>Game development</h3>
+        <div class="chips"><span class="chip">Unity</span><span class="chip">2D physics</span><span class="chip">Collision detection</span><span class="chip">Unity Animator</span></div>
+      </div>
+      <div class="group">
+        <h3>Programming</h3>
+        <div class="chips"><span class="chip">C#</span><span class="chip">OOP concepts</span><span class="chip">Data structures</span><span class="chip">Algorithms</span></div>
+      </div>
+      <div class="group">
+        <h3>Tools</h3>
+        <div class="chips"><span class="chip">Visual Studio</span><span class="chip">Git</span><span class="chip">GitHub</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="head"><h2 class="title">Projects</h2><p>Two Unity games, plus my BCA final year project.</p></div>
+    <div class="stages">
+
+      <article class="stage">
+        <div class="main">
+          <div class="tag"><span class="stagelabel">Game 1 · 2D action</span><span class="pill done">Completed</span></div>
+          <h3>Hammer Havoc</h3>
+          <p>Hammer Havoc is a 2D action game made with Unity and C#. The player swings a hammer to defeat crab enemies. Each crab respawns after it is defeated, so play never stops until one touches the player.</p>
+          <ul class="feats">
+            <li><b>Player attack.</b> The player fights with a hammer.</li>
+            <li><b>Enemy system.</b> Crabs can be defeated and then respawn.</li>
+            <li><b>Collision detection.</b> Handles contact between the player, the weapon and the enemies.</li>
+            <li><b>Game over.</b> The game ends when an enemy touches the player.</li>
+            <li><b>Sound effects.</b> A sound plays when an enemy is defeated.</li>
+          </ul>
+          <a class="btn" href="https://lnkd.in/p/gGzdfWaB" target="_blank" rel="noopener">View project</a>
+        </div>
+        <div class="hud">
+          <h4>Tech used</h4>
+          <div class="chips"><span class="chip">Unity</span><span class="chip">C#</span><span class="chip">Visual Studio</span><span class="chip">Rigidbody2D</span><span class="chip">Collider2D</span></div>
+          <h4>What I learned</h4>
+          <ul>
+            <li>Building a 2D game in Unity</li>
+            <li>Writing gameplay mechanics in C#</li>
+            <li>Working with Rigidbody2D and Collider2D</li>
+            <li>Handling respawns and game-over logic</li>
+            <li>Debugging gameplay issues</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="stage">
+        <div class="main">
+          <div class="tag"><span class="stagelabel">Game 2 · 2D platformer</span><span class="pill wip">In progress</span></div>
+          <h3>2D Platformer</h3>
+          <p>My second Unity game. The player fights enemies with a sword and rescues a girl. I add new features as I learn, and a gameplay video shows the current progress.</p>
+          <ul class="feats">
+            <li><b>Player animations.</b> Jumping and attacking use Unity Animator.</li>
+            <li><b>Sword combat.</b> The player fights enemies with a sword.</li>
+            <li><b>New enemies.</b> I recently added enemy characters, including a skeleton.</li>
+            <li><b>Physics and collision.</b> Used for player movement and interactions in the level.</li>
+          </ul>
+          <a class="btn" href="https://lnkd.in/p/gU-c7JVp" target="_blank" rel="noopener">Watch gameplay video</a>
+        </div>
+        <div class="hud">
+          <h4>Tech used</h4>
+          <div class="chips"><span class="chip">Unity</span><span class="chip">C#</span><span class="chip">Unity Animator</span><span class="chip">2D physics</span></div>
+          <h4>Status</h4>
+          <ul>
+            <li>Still in development</li>
+            <li>Skeleton enemy added most recently</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="stage">
+        <div class="main">
+          <div class="tag"><span class="stagelabel">BCA final year project · IoT</span><span class="pill done">Completed</span></div>
+          <h3>Gas Reservation and Leakage Detection</h3>
+          <p>An IoT-based system that handles gas reservation and detects gas leakage. It was my final year project for my BCA and my first project that connected software to hardware.</p>
+        </div>
+        <div class="hud">
+          <h4>Focus</h4>
+          <ul>
+            <li>Internet of Things</li>
+            <li>Leak detection</li>
+          </ul>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="contact">
+      <div>
+        <h2>Let's make something playable.</h2>
+        <p>I am open to game development roles and internships. Reach out on LinkedIn, or look through my code on GitHub.</p>
+      </div>
+      <dl class="links">
+        <div class="row"><dt>LinkedIn</dt><dd><a href="https://linkedin.com/in/ameer-basha-6a253133b" target="_blank" rel="noopener">ameer-basha-6a253133b</a></dd></div>
+        <div class="row"><dt>GitHub</dt><dd><a href="https://github.com/Ameer2805" target="_blank" rel="noopener">Ameer2805</a></dd></div>
+        <div class="row"><dt>Phone</dt><dd><span id="phone">6369616324</span><button class="copy" id="copy-phone" type="button">Copy</button></dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <footer>Ameer Basha M · Built with Unity dreams and C# habits</footer>
+</main>
+
+<script>
+(function () {
+  var btn = document.getElementById('copy-phone');
+  var num = document.getElementById('phone');
+  btn.addEventListener('click', function () {
+    var done = function () { btn.textContent = 'Copied'; setTimeout(function () { btn.textContent = 'Copy'; }, 1500); };
+    var fallback = function () {
+      try {
+        var r = document.createRange(); r.selectNodeContents(num);
+        var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+        btn.textContent = 'Selected';
+      } catch (e) {}
+    };
+    try {
+      navigator.clipboard.writeText(num.textContent).then(done, fallback);
+    } catch (e) { fallback(); }
+  });
+})();
+</script>
+
+</body></html>
